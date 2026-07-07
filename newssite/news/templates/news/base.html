@@ -1,0 +1,140 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}NewsWave – Latest News{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{% static 'news/css/style.css' %}"/>
+</head>
+<body>
+
+<!-- ══ TOP BAR ══════════════════════════════════════════════════════ -->
+<div class="top-bar">
+  <div class="container top-bar-inner">
+    <span class="top-bar-date"><i class="fa fa-calendar-alt"></i> {% now "l, F j, Y" %}</span>
+    <div class="top-bar-social">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ HEADER ═══════════════════════════════════════════════════════ -->
+<header id="site-header">
+  <div class="container header-inner">
+    <a href="{% url 'home' %}" class="brand">
+      <span class="brand-wave">News</span><span class="brand-text">Wave</span>
+    </a>
+    <div class="header-search">
+      <form action="{% url 'search' %}" method="get">
+        <input type="text" name="q" placeholder="Search news…" value="{{ request.GET.q }}"/>
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </form>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+</header>
+
+<!-- ══ NAV BAR ══════════════════════════════════════════════════════ -->
+<nav id="main-nav">
+  <div class="container">
+    <ul class="nav-list" id="nav-list">
+      <li><a href="{% url 'home' %}" class="{% if active_page == 'home' %}active{% endif %}">
+        <i class="fa fa-home"></i> Home
+      </a></li>
+
+      <!-- Mega-menu for categories -->
+      <li class="has-mega">
+        <a href="#" class="{% if active_page in categories %}active{% endif %}">
+          Categories <i class="fa fa-chevron-down fa-xs"></i>
+        </a>
+        <div class="mega-menu">
+          <div class="mega-grid">
+            {% for cat in categories %}
+            <a href="{% url 'category' cat %}" class="mega-item {% if active_page == cat %}active{% endif %}">
+              {% if cat == 'general' %}<i class="fa fa-globe"></i>
+              {% elif cat == 'technology' %}<i class="fa fa-microchip"></i>
+              {% elif cat == 'business' %}<i class="fa fa-briefcase"></i>
+              {% elif cat == 'sports' %}<i class="fa fa-futbol"></i>
+              {% elif cat == 'entertainment' %}<i class="fa fa-film"></i>
+              {% elif cat == 'health' %}<i class="fa fa-heartbeat"></i>
+              {% elif cat == 'science' %}<i class="fa fa-flask"></i>
+              {% endif %}
+              {{ cat|title }}
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+      </li>
+
+      <li><a href="{% url 'category' 'technology' %}" class="{% if active_page == 'technology' %}active{% endif %}">Technology</a></li>
+      <li><a href="{% url 'category' 'sports' %}" class="{% if active_page == 'sports' %}active{% endif %}">Sports</a></li>
+      <li><a href="{% url 'category' 'business' %}" class="{% if active_page == 'business' %}active{% endif %}">Business</a></li>
+      <li><a href="{% url 'about' %}" class="{% if active_page == 'about' %}active{% endif %}">About</a></li>
+      <li><a href="{% url 'contact' %}" class="{% if active_page == 'contact' %}active{% endif %}">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ══ MAIN CONTENT ═════════════════════════════════════════════════ -->
+<main id="main-content">
+  {% block content %}{% endblock %}
+</main>
+
+<!-- ══ FOOTER ═══════════════════════════════════════════════════════ -->
+<footer id="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-col">
+      <h3 class="footer-brand"><span class="brand-wave">News</span><span>Wave</span></h3>
+      <p>Your daily source for breaking news, technology, sports, business and more — powered by NewsAPI.</p>
+      <div class="footer-social">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Categories</h4>
+      <ul>
+        {% for cat in categories %}
+        <li><a href="{% url 'category' cat %}">{{ cat|title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'about' %}">About Us</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+        <li><a href="{% url 'search' %}">Search</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Newsletter</h4>
+      <p>Subscribe to our newsletter for the latest updates.</p>
+      <div class="footer-subscribe">
+        <input type="email" placeholder="Your email…"/>
+        <button>Subscribe</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; {% now "Y" %} NewsWave. All rights reserved. | Powered by NewsAPI</p>
+    </div>
+  </div>
+</footer>
+
+<script src="{% static 'news/js/main.js' %}"></script>
+</body>
+</html>

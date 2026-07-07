@@ -1,0 +1,131 @@
+{% extends 'news/base.html' %}
+{% load static %}
+
+{% block title %}NewsWave – Breaking News, Latest Headlines{% endblock %}
+
+{% block content %}
+
+<!-- ══ FEATURED / HERO SECTION ══════════════════════════════════════ -->
+{% if featured %}
+<section class="hero-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title"><span>Top Stories</span></h2>
+      <a href="{% url 'category' 'general' %}" class="see-all-btn">See All <i class="fa fa-arrow-right"></i></a>
+    </div>
+
+    <div class="hero-grid">
+      <!-- Big featured article -->
+      {% with art=featured.0 %}
+      <div class="hero-main">
+        <a href="{% url 'article_detail' %}?title={{ art.title|urlencode }}&description={{ art.description|urlencode }}&url={{ art.url|urlencode }}&image={{ art.urlToImage|urlencode }}&source={{ art.source.name|urlencode }}&publishedAt={{ art.publishedAt|urlencode }}&author={{ art.author|urlencode }}&content={{ art.content|urlencode }}">
+          <div class="hero-img-wrap">
+            {% if art.urlToImage %}
+              <img src="{{ art.urlToImage }}" alt="{{ art.title }}" loading="lazy"/>
+            {% else %}
+              <div class="no-img"><i class="fa fa-newspaper"></i></div>
+            {% endif %}
+            <div class="hero-overlay">
+              <span class="cat-badge">{{ art.source.name }}</span>
+              <h2 class="hero-title">{{ art.title }}</h2>
+              <p class="hero-meta"><i class="fa fa-clock"></i> {{ art.publishedAt|slice:":10" }}</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endwith %}
+
+      <!-- Side featured articles -->
+      <div class="hero-side">
+        {% for art in featured|slice:"1:5" %}
+        <a href="{% url 'article_detail' %}?title={{ art.title|urlencode }}&description={{ art.description|urlencode }}&url={{ art.url|urlencode }}&image={{ art.urlToImage|urlencode }}&source={{ art.source.name|urlencode }}&publishedAt={{ art.publishedAt|urlencode }}&author={{ art.author|urlencode }}&content={{ art.content|urlencode }}" class="side-card">
+          <div class="side-img-wrap">
+            {% if art.urlToImage %}
+              <img src="{{ art.urlToImage }}" alt="{{ art.title }}" loading="lazy"/>
+            {% else %}
+              <div class="no-img-sm"><i class="fa fa-newspaper"></i></div>
+            {% endif %}
+          </div>
+          <div class="side-info">
+            <span class="cat-badge-sm">{{ art.source.name }}</span>
+            <h3 class="side-title">{{ art.title|truncatechars:80 }}</h3>
+            <p class="side-meta"><i class="fa fa-clock"></i> {{ art.publishedAt|slice:":10" }}</p>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TICKER ═══════════════════════════════════════════════════════ -->
+<div class="ticker-wrap">
+  <div class="container ticker-inner">
+    <span class="ticker-label">BREAKING</span>
+    <div class="ticker-scroll">
+      <div class="ticker-track">
+        {% for art in featured %}
+          <span class="ticker-item">{{ art.title }}</span>
+        {% endfor %}
+        {% for art in featured %}
+          <span class="ticker-item">{{ art.title }}</span>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<!-- ══ CATEGORY ROWS ═════════════════════════════════════════════════ -->
+<div class="container categories-section">
+  <div class="cat-row-grid">
+
+    <!-- Technology -->
+    {% if technology %}
+    <section class="cat-section">
+      <div class="section-header">
+        <h2 class="section-title"><span><i class="fa fa-microchip"></i> Technology</span></h2>
+        <a href="{% url 'category' 'technology' %}" class="see-all-btn">See All</a>
+      </div>
+      <div class="card-grid">
+        {% for art in technology %}
+        {% include 'news/partials/card.html' with article=art %}
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    <!-- Business -->
+    {% if business %}
+    <section class="cat-section">
+      <div class="section-header">
+        <h2 class="section-title"><span><i class="fa fa-briefcase"></i> Business</span></h2>
+        <a href="{% url 'category' 'business' %}" class="see-all-btn">See All</a>
+      </div>
+      <div class="card-grid">
+        {% for art in business %}
+        {% include 'news/partials/card.html' with article=art %}
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    <!-- Sports -->
+    {% if sports %}
+    <section class="cat-section">
+      <div class="section-header">
+        <h2 class="section-title"><span><i class="fa fa-futbol"></i> Sports</span></h2>
+        <a href="{% url 'category' 'sports' %}" class="see-all-btn">See All</a>
+      </div>
+      <div class="card-grid">
+        {% for art in sports %}
+        {% include 'news/partials/card.html' with article=art %}
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}

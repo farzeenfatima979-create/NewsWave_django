@@ -1,0 +1,19 @@
+{% load static %}
+<a href="{% url 'article_detail' %}?title={{ article.title|urlencode }}&description={{ article.description|urlencode }}&url={{ article.url|urlencode }}&image={{ article.urlToImage|urlencode }}&source={{ article.source.name|urlencode }}&publishedAt={{ article.publishedAt|urlencode }}&author={{ article.author|urlencode }}&content={{ article.content|urlencode }}" class="news-card">
+  <div class="card-img-wrap">
+    {% if article.urlToImage %}
+      <img src="{{ article.urlToImage }}" alt="{{ article.title }}" loading="lazy"/>
+    {% else %}
+      <div class="no-img"><i class="fa fa-newspaper"></i></div>
+    {% endif %}
+  </div>
+  <div class="card-body">
+    <span class="cat-badge-sm">{{ article.source.name }}</span>
+    <h3 class="card-title">{{ article.title|truncatechars:90 }}</h3>
+    <p class="card-desc">{{ article.description|truncatechars:100 }}</p>
+    <div class="card-meta">
+      <span><i class="fa fa-clock"></i> {{ article.publishedAt|slice:":10" }}</span>
+      {% if article.author %}<span><i class="fa fa-user"></i> {{ article.author|truncatechars:20 }}</span>{% endif %}
+    </div>
+  </div>
+</a>

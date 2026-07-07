@@ -1,0 +1,47 @@
+{% extends 'news/base.html' %}
+{% block title %}Search: {{ query }} – NewsWave{% endblock %}
+
+{% block content %}
+<div class="container page-wrapper">
+  <div class="page-banner">
+    <h1 class="page-banner-title">Search Results</h1>
+    <nav class="breadcrumb-nav">
+      <a href="{% url 'home' %}">Home</a> <i class="fa fa-chevron-right fa-xs"></i> Search
+    </nav>
+  </div>
+
+  <div class="search-bar-large">
+    <form action="{% url 'search' %}" method="get">
+      <input type="text" name="q" value="{{ query }}" placeholder="Search news…"/>
+      <button type="submit"><i class="fa fa-search"></i> Search</button>
+    </form>
+  </div>
+
+  {% if query %}
+    {% if articles %}
+    <div class="section-header">
+      <h2 class="section-title"><span>Results for "{{ query }}"</span></h2>
+      <p class="result-count">{{ articles|length }} articles found</p>
+    </div>
+    <div class="card-grid-wide">
+      {% for art in articles %}
+      {% include 'news/partials/card.html' with article=art %}
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <i class="fa fa-search fa-3x"></i>
+      <h3>No results for "{{ query }}"</h3>
+      <p>Try different keywords or browse our categories.</p>
+      <a href="{% url 'home' %}" class="btn-primary">Browse News</a>
+    </div>
+    {% endif %}
+  {% else %}
+  <div class="empty-state">
+    <i class="fa fa-search fa-3x"></i>
+    <h3>Search for anything</h3>
+    <p>Type a keyword above to find news articles.</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

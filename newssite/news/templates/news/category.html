@@ -1,0 +1,32 @@
+{% extends 'news/base.html' %}
+{% block title %}{{ category }} News – NewsWave{% endblock %}
+
+{% block content %}
+<div class="container page-wrapper">
+  <div class="page-banner">
+    <h1 class="page-banner-title">{{ category }} News</h1>
+    <nav class="breadcrumb-nav">
+      <a href="{% url 'home' %}">Home</a> <i class="fa fa-chevron-right fa-xs"></i> {{ category }}
+    </nav>
+  </div>
+
+  {% if articles %}
+  <div class="section-header">
+    <h2 class="section-title"><span>Latest in {{ category }}</span></h2>
+    <p class="result-count">{{ articles|length }} articles</p>
+  </div>
+  <div class="card-grid-wide">
+    {% for art in articles %}
+    {% include 'news/partials/card.html' with article=art %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <i class="fa fa-newspaper fa-3x"></i>
+    <h3>No articles found</h3>
+    <p>Check your API key or try another category.</p>
+    <a href="{% url 'home' %}" class="btn-primary">Go Home</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

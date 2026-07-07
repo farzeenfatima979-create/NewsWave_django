@@ -1,0 +1,44 @@
+{% extends 'news/base.html' %}
+{% block title %}About Us – NewsWave{% endblock %}
+
+{% block content %}
+<div class="container page-wrapper">
+  <div class="page-banner">
+    <h1 class="page-banner-title">About NewsWave</h1>
+    <nav class="breadcrumb-nav">
+      <a href="{% url 'home' %}">Home</a> <i class="fa fa-chevron-right fa-xs"></i> About
+    </nav>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-text">
+      <h2>Your Trusted News Source</h2>
+      <p>NewsWave is a modern Django-powered news aggregator that delivers the latest headlines from around the world in real time using the NewsAPI. From breaking news to in-depth technology coverage, sports updates, and business insights — we have it all in one place.</p>
+      <p>We believe in making news accessible, fast, and beautifully presented. Our platform pulls live data directly from thousands of reputable sources so you always stay informed.</p>
+
+      <div class="feature-cards">
+        <div class="feature-card">
+          <i class="fa fa-bolt fa-2x"></i>
+          <h4>Real-Time News</h4>
+          <p>Live updates from global sources via NewsAPI.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fa fa-layer-group fa-2x"></i>
+          <h4>7 Categories</h4>
+          <p>General, Tech, Business, Sports, Health, Science & Entertainment.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fa fa-search fa-2x"></i>
+          <h4>Powerful Search</h4>
+          <p>Find any article with keyword search across all sources.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fa fa-mobile-alt fa-2x"></i>
+          <h4>Fully Responsive</h4>
+          <p>Works beautifully on desktop, tablet, and mobile.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
