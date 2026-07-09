@@ -1,15 +1,21 @@
-# NewsWave
+# 📰 NewsWave
 
-A modern news website built using Django.
+![NewsWave Homepage](image.png)
 
-## Features
-- Latest news
-- Search functionality
-- Categories
-- Responsive design
-- NewsAPI integration
+## 📖 About
 
-## Technologies Used
+NewsWave is a dynamic news web application built with Django that delivers the latest news across multiple categories through a clean, responsive, and user-friendly interface.
+
+## ✨ Features
+
+- 🔍 Search for news articles
+- 📰 Browse multiple news categories
+- 📱 Responsive design
+- 🎨 Clean and modern user interface
+- ⚡ Dynamic content powered by Django
+
+## 🛠️ Technologies Used
+
 - Python
 - Django
 - HTML
@@ -17,12 +23,18 @@ A modern news website built using Django.
 - Bootstrap
 - JavaScript
 
-## How to Run
+## 🚀 Installation
 
 1. Clone the repository
-2. Install requirements
-3. Run the server
+2. Install the required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Start the development server:
+   ```bash
+   python manage.py runserver
+   ```
 
-## Author
+## 👩‍💻 Author
 
-Farzeen Fatima
+**Farzeen Fatima**
